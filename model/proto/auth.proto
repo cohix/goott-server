@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+import "simplcrypto/proto/message.proto";
+import "simplcrypto/proto/keypair.proto";
+
+package goott.server.model;
+option go_package = "github.com/cohix/goott-server/model";
+
+message AuthRequest {
+	simpl.crypto.Signature TokenSignature = 1;
+	simpl.crypto.serializablePubKey PubKey = 2;
+}
+
+message AuthResponse {
+	simpl.crypto.Message EncSessionKey = 1;
+}

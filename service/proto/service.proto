@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+import "model/proto/auth.proto";
+
+package goott.server.service;
+option go_package = "github.com/cohix/goott-server/service";
+
+service Goott {
+	rpc Auth(goott.server.model.AuthRequest) returns (goott.server.model.AuthResponse);
+}
