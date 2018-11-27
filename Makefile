@@ -9,7 +9,7 @@ docker/release: docker/base
 
 docker/dev:
 	docker build . -t cohix/goott-server:dev
-	docker run -it cohix/goott-server:dev
+	docker run -it -p "3687:3687" cohix/goott-server:dev
 
 docker/base:
 	go install
