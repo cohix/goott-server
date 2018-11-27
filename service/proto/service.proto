@@ -1,10 +1,15 @@
 syntax = "proto3";
 
 import "model/proto/auth.proto";
+import "simplcrypto/proto/message.proto";
 
 package goott.server.service;
 option go_package = "github.com/cohix/goott-server/service";
 
 service Goott {
 	rpc Auth(goott.server.model.AuthRequest) returns (goott.server.model.AuthResponse);
+	rpc GetSecretMessage(simpl.crypto.Message) returns (simpl.crypto.Message);
+	rpc SetSecretMessage(simpl.crypto.Message) returns (Empty);
 }
+
+message Empty {}

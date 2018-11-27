@@ -3,6 +3,7 @@ package service
 import (
 	"fmt"
 	"net"
+	"os"
 
 	"github.com/cohix/simplcrypto"
 	"github.com/pkg/errors"
@@ -25,8 +26,14 @@ func StartGoottService(app *model.App, errChan chan error) {
 
 	grpcServer := grpc.NewServer()
 
+	message, ok := os.LookupEnv("GOOTT_MESSAGE")
+	if !ok {
+		message = "Luke, I am your father"
+	}
+
 	service := &GoottService{
-		App: app,
+		App:     app,
+		Message: message,
 	}
 
 	RegisterGoottServer(grpcServer, service)
@@ -39,13 +46,17 @@ func StartGoottService(app *model.App, errChan chan error) {
 
 // GoottService describes a goott server
 type GoottService struct {
-	App *model.App
+	App     *model.App
+	Message string
 }
 
 // Auth allows a client to prove it knows the auth token in exchange for a session key
 func (gs *GoottService) Auth(ctx context.Context, req *model.AuthRequest) (*model.AuthResponse, error) {
+	defer log.LogTrace("Auth")()
+
 	pubkey, err := simplcrypto.KeyPairFromSerializedPubKey(req.PubKey)
 	if err != nil {
+		log.LogWarn(err.Error())
 		return nil, errors.Wrap(err, "failed to KeyPairFromSerializedPubKey")
 	}
 
@@ -53,6 +64,7 @@ func (gs *GoottService) Auth(ctx context.Context, req *model.AuthRequest) (*mode
 
 	decodedToken, err := simplcrypto.Base64URLDecode(gs.App.AuthToken)
 	if err != nil {
+		log.LogWarn(err.Error())
 		return nil, errors.Wrap(err, "failed to Base64URLDecode")
 	}
 
@@ -62,6 +74,7 @@ func (gs *GoottService) Auth(ctx context.Context, req *model.AuthRequest) (*mode
 
 	sessionKey, err := simplcrypto.GenerateSymKey()
 	if err != nil {
+		log.LogWarn(err.Error())
 		return nil, errors.Wrap(err, "failed to GenerateSymKey")
 	}
 
@@ -71,6 +84,7 @@ func (gs *GoottService) Auth(ctx context.Context, req *model.AuthRequest) (*mode
 
 	encSessionKey, err := pubkey.Encrypt(sessionKeyJSON)
 	if err != nil {
+		log.LogWarn(err.Error())
 		return nil, errors.Wrap(err, "failed to Encrypt")
 	}
 

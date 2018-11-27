@@ -19,11 +19,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:4ad048b8d6fedfd045a1101c2437b703f6661d6e84cdfd26e727285574013ebc"
+  digest = "1:5c46e9d977db2a136594a85630160def267e1f745b047e98c178bb9baeedf9a4"
   name = "github.com/cohix/simplog"
   packages = ["."]
   pruneopts = "UT"
-  revision = "daf6ddac7eb6792820460ff5ed06cfbb4d95d798"
+  revision = "5dd25e09d33a45d09754eff45328faa92c7272ec"
 
 [[projects]]
   digest = "1:4c0989ca0bcd10799064318923b9bc2db6b4d6338dd75f3f2d86c3511aaaf5cf"
@@ -46,6 +46,14 @@
   pruneopts = "UT"
   revision = "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
   version = "v1.0"
+
+[[projects]]
+  digest = "1:40e195917a951a8bf867cd05de2a46aaf1806c50cf92eebf4c16f78cd196f747"
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
+  version = "v0.8.0"
 
 [[projects]]
   digest = "1:645cabccbb4fa8aab25a956cbcbdf6a6845ca736b2c64e197ca7cbb9d210b939"
@@ -160,6 +168,7 @@
     "github.com/cohix/simplcrypto",
     "github.com/cohix/simplog",
     "github.com/golang/protobuf/proto",
+    "github.com/pkg/errors",
     "github.com/spf13/cobra",
     "golang.org/x/net/context",
     "google.golang.org/grpc",

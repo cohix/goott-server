@@ -18,6 +18,7 @@ func InitializeApp() *App {
 
 	return &App{
 		AuthToken: token,
+		Keyset:    &simplcrypto.KeySet{},
 	}
 }
 
